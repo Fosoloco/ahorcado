@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Ahorcado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        #input-section {
+            text-align: center;
+            max-width: 80%; /* Limit the width for larger screens */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #input-section input, #input-section button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 5px;
+            width: 100%; /* Make input and button full width on smaller screens */
+            max-width: 300px; /* Limit width to prevent stretching on larger screens */
+        }
+        #link-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            /* Apply styles for screens wider than 768px */
+            #input-section {
+                max-width: 50%; /* Adjust width for medium screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="input-section">
+        <h1>Ingrese una palabra para el ahorcado</h1>
+        <input type="text" id="word-input" placeholder="Ingrese una palabra" />
+        <button onclick="generarEnlace()">Generar Enlace</button>
+        <div id="link-section"></div>
+    </div>
+
+    <script>
+        function generarEnlace() {
+            const input = document.getElementById('word-input').value.toUpperCase();
+            if (input) {
+                // Encriptar la palabra en base64
+                const encodedWord = btoa(input);
+                // El enlace está local...
+                const enlace = `file:///C:/Users/Federico/Documents/Fede/web/ahorcado%20web/version%202/juego.html?palabra=${encodedWord}`;
+                document.getElementById('link-section').innerHTML = `<p>Enlace generado:</p><a href="${enlace}" target="_blank">${enlace}</a>`;
+                // Enlace para whatsapp
+                //const enlace = `https://wa.me/?text=¡Adiviná%20esta%20pálabra%20https%3A%2F%2Ffile:///C:/Users/Federico/Documents/Fede/web/ahorcado%20web/version%202/juego.html?palabra=${encodedWord}`;
+                
+            } else {
+                alert('Por favor, ingrese una palabra.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahorcado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        #word {
+            font-size: 2em;
+            letter-spacing: 0.5em;
+            margin-bottom: 20px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #keyboard button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 300px;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #used-letters {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        #meaning {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        @media (max-width: 600px) {
+            #word {
+                font-size: 1.5em;
+                letter-spacing: 0.3em;
+            }
+            #keyboard button {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="word"></div>
+    <div id="keyboard"></div>
+    <div id="status"></div>
+    <div id="used-letters"></div>
+    <div id="message"></div>
+    <div id="meaning"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedWord = urlParams.get('palabra');
+        if (!encodedWord) {
+            document.getElementById('message').textContent = 'No se proporcionó ninguna palabra.';
+        } else {
+            // Decodificar la palabra desde base64
+            const palabra = atob(encodedWord).toUpperCase();
+            let palabraOculta = Array(palabra.length).fill('_');
+            let intentos = 5;
+            let letrasUsadas = [];
+
+            const wordElement = document.getElementById('word');
+            const keyboardElement = document.getElementById('keyboard');
+            const statusElement = document.getElementById('status');
+            const usedLettersElement = document.getElementById('used-letters');
+            const messageElement = document.getElementById('message');
+            const meaningElement = document.getElementById('meaning');
+
+            function actualizarPalabra() {
+                wordElement.textContent = palabraOculta.join(' ');
+            }
+
+            function actualizarEstado() {
+                statusElement.textContent = `Intentos restantes: ${intentos}`;
+                usedLettersElement.textContent = `Letras usadas: ${letrasUsadas.join(', ')}`;
+            }
+
+            function crearTeclado() {
+                const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                letras.forEach(letra => {
+                    const button = document.createElement('button');
+                    button.textContent = letra;
+                    button.addEventListener('click', () => adivinarLetra(letra));
+                    keyboardElement.appendChild(button);
+                });
+            }
+
+            function adivinarLetra(letra) {
+                if (!letrasUsadas.includes(letra)) {
+                    letrasUsadas.push(letra);
+                    if (palabra.includes(letra)) {
+                        for (let i = 0; i < palabra.length; i++) {
+                            if (palabra[i] === letra) {
+                                palabraOculta[i] = letra;
+                            }
+                        }
+                    } else {
+                        intentos--;
+                        if (intentos === 0) {
+                            messageElement.textContent = '¡Perdiste! La palabra era: ' + palabra;
+                            desactivarTeclado();
+                        }
+                    }
+                    actualizarPalabra();
+                    actualizarEstado();
+                    verificarVictoria();
+                }
+            }
+
+            function verificarVictoria() {
+                if (!palabraOculta.includes('_')) {
+                    messageElement.textContent = '¡Ganaste! La palabra es: ' + palabra;
+                    mostrarSignificado();
+                    desactivarTeclado();
+                }
+            }
+
+            function mostrarSignificado() {
+                // Aquí puedes definir un diccionario o API para obtener el significado de la palabra
+                // Por simplicidad, mostraremos un significado predefinido
+                meaningElement.textContent = `El significado de "${palabra}" es: [Aquí va el significado]`;
+            }
+
+            function desactivarTeclado() {
+                const buttons = keyboardElement.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                });
+            }
+
+            actualizarPalabra();
+            actualizarEstado();
+            crearTeclado();
+        }
+    </script>
+</body>
+</html>

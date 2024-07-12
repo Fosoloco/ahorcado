@@ -35,7 +35,6 @@
             text-align: center;
         }
         @media (min-width: 768px) {
-            
             #input-section {
                 max-width: 50%; 
             }
@@ -51,19 +50,29 @@
     </div>
 
     <script>
+        function eliminarTildes(str) {
+            const acentos = {
+                'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+                'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'
+            };
+            return str.split('').map(letra => acentos[letra] || letra).join('');
+        }
+
         function generarEnlace() {
-            const input = document.getElementById('word-input').value.toUpperCase();
+            let input = document.getElementById('word-input').value;
+            if (/\d/.test(input)) {
+                alert('No se permiten números en la palabra.');
+                return;
+            }
+            input = eliminarTildes(input.toUpperCase());
             if (input) {
                 // Encriptar la palabra en base64
                 const encodedWord = btoa(input);
-                 // El enlace está local github...
+                // El enlace está local github...
                 const enlace = `https://api.whatsapp.com/send?text=¡Adiviná%20esta%20palabra%20https%3A%2F%2Ffosoloco.github.io/ahorcado/juego.html?palabra=${encodedWord}`;
                 // El enlace está local...
                 // const enlace = `file:///C:/Users/Federico/Documents/Fede/web/ahorcado%20web/version%202/juego.html?palabra=${encodedWord}`;
                 document.getElementById('link-section').innerHTML = `<p>Enlace generado:</p><a href="${enlace}" target="_blank">${enlace}</a>`;
-                // Enlace para whatsapp
-                //const enlace = `https://wa.me/?text=¡Adiviná%20esta%20pálabra%20https%3A%2F%2Ffile:///C:/Users/Federico/Documents/Fede/web/ahorcado%20web/version%202/juego.html?palabra=${encodedWord}`;
-                
             } else {
                 alert('Por favor, ingrese una palabra.');
             }

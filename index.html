@@ -64,6 +64,10 @@
                 alert('No se permiten números en la palabra.');
                 return;
             }
+            if (/\s/.test(input)) {
+                alert('No se permiten espacios en la palabra.');
+                return;
+            }
             input = eliminarTildes(input.toUpperCase());
             if (input) {
                 // Encriptar la palabra en base64

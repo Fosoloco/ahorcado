@@ -58,6 +58,7 @@
             return str.split('').map(letra => acentos[letra] || letra).join('');
         }
 
+        // Verifica que la palabra exista en el archivo diccionario.txt
         function verificarPalabra(palabra, callback) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', 'diccionario.txt', true);

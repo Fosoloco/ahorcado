@@ -95,9 +95,9 @@
                 statusElement.textContent = `Intentos restantes: ${intentos}`;
                 usedLettersElement.textContent = `Letras usadas: ${letrasUsadas.join(', ')}`;
             }
-
+            // Genera el teclado
             function crearTeclado() {
-                const letras = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+                const letras = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ '.split('');
                 letras.forEach(letra => {
                     const button = document.createElement('button');
                     button.textContent = letra;

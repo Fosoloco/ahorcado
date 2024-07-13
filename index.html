@@ -50,15 +50,7 @@
     </div>
 
     <script>
-        function eliminarTildes(str) {
-            const acentos = {
-                'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
-                'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'
-            };
-            return str.split('').map(letra => acentos[letra] || letra).join('');
-        }
-
-        // Verifica que la palabra exista en el archivo diccionario.txt
+         // Verifica que la palabra exista en el archivo diccionario.txt
         function verificarPalabra(palabra, callback) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', 'diccionario.txt', true);
@@ -69,6 +61,15 @@
                 }
             };
             xhr.send();
+        }
+
+        
+        function eliminarTildes(str) {
+            const acentos = {
+                'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+                'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'
+            };
+            return str.split('').map(letra => acentos[letra] || letra).join('');
         }
 
         function generarEnlace() {

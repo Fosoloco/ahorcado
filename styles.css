@@ -30,9 +30,46 @@ body {
     margin-top: 20px;
     text-align: center;
 }
-
-@media (min-width: 768px) {
-    #input-section {
-        max-width: 50%; 
+#word {
+        font-size: 2em;
+        letter-spacing: 0.5em;
+        margin-bottom: 20px;
     }
-}
+    #message {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+    #keyboard button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+    #keyboard {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 300px;
+    }
+    #status {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+    #used-letters {
+        margin-top: 10px;
+        font-size: 1.2em;
+    }
+    #meaning {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+    @media (max-width: 600px) {
+        #word {
+            font-size: 1.5em;
+            letter-spacing: 0.3em;
+        }
+        #keyboard button {
+            padding: 8px;
+            font-size: 0.8em;
+        }
+    }

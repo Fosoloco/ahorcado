@@ -61,27 +61,7 @@
                     <li>Recargar la página para cargar una nueva palabra</li>
                 </ul>
         </div>
-        <div class="section">
-            <h2>Verificar Palabra</h2>
-            <input type="text" id="search-input" class="input-box" placeholder="Buscar en el diccionario...">
-            <button class="button" onclick="checkWord()">Buscar</button>
-            <p id="check-result" class="result"></p>
-        </div>
     </div>
-    <script>
-        async function checkWord() {
-            const word = document.getElementById('search-input').value;
-            const isValid = await checkWordInDictionary(word);
-            document.getElementById('check-result').textContent = isValid ? "La palabra existe en el diccionario." : "La palabra no existe en el diccionario.";
-        }
-
-        async function checkWordInDictionary(word) {
-            const response = await fetch('diccionario.txt');
-            const dictionary = await response.text();
-            const words = dictionary.split('\n').map(w => w.trim().toLowerCase());
-            return words.includes(word.trim().toLowerCase());
-        }
-    </script>
 </body>
 </html>
 

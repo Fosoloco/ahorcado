@@ -2,8 +2,8 @@ async function mostrarSignificado() {
     const palabra = document.getElementById('palabra').value;  // Obtener la palabra del input
     const meaningElement = document.getElementById('meaning'); // Elemento donde se mostrará el significado
 
-    // Definir la URL de la API del diccionario
-    const apiURL = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
+    // Definir la URL de la API del diccionario para español
+    const apiURL = `https://api.dictionaryapi.dev/api/v2/entries/es/${palabra}`;
 
     try {
         const response = await fetch(apiURL);

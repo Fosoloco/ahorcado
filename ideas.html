@@ -55,9 +55,6 @@
         <div class="section">
             <h2>Instrucciones</h2>
             <p>Una vez escrita la palabra al hacer click en el botón generar se creará un link para ser enviado por WhatsApp.</p>
-            <input type="text" id="word-input" class="input-box" placeholder="Escribe una palabra...">
-            <button class="button" onclick="generateLink()">Generar</button>
-            <p id="whatsapp-link" class="result"></p>
         </div>
         <div class="section">
             <h2>Verificar Palabra</h2>
@@ -67,17 +64,6 @@
         </div>
     </div>
     <script>
-        async function generateLink() {
-            const word = document.getElementById('word-input').value;
-            const isValid = await checkWordInDictionary(word);
-            if (isValid) {
-                const link = `https://api.whatsapp.com/send?text=${encodeURIComponent(word)}`;
-                document.getElementById('whatsapp-link').innerHTML = `<a href="${link}" target="_blank">Enviar por WhatsApp</a>`;
-            } else {
-                document.getElementById('whatsapp-link').textContent = "La palabra no existe en el diccionario.";
-            }
-        }
-
         async function checkWord() {
             const word = document.getElementById('search-input').value;
             const isValid = await checkWordInDictionary(word);

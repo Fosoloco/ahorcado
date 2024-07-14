@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generar Ahorcado</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #icono-idea {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        #icono-idea img {
+            width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 600px) {
+            #icono-idea {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="input-section">
@@ -12,6 +34,10 @@
         <input type="text" id="word-input" placeholder="Ingrese una palabra" />
         <button onclick="generarEnlace()">Generar Enlace</button>
         <div id="link-section"></div>
+    </div>
+
+    <div id="icono-idea" onclick="abrirNuevaVentana()">
+        <img src="ico_idea.ico" alt="Idea Icono">
     </div>
 
     <script>
@@ -49,12 +75,8 @@
             if (input) {
                 verificarPalabra(input, function(existe) {
                     if (existe) {
-                        // Encriptar la palabra en base64
                         const encodedWord = btoa(input);
-                        // El enlace está local github...
                         const enlace = `https://api.whatsapp.com/send?text=¡Adiviná%20esta%20palabra%20https%3A%2F%2Ffosoloco.github.io/ahorcado/juego.html?palabra=${encodedWord}`;
-                        // El enlace está local...
-                        // const enlace = `file:///C:/Users/Federico/Documents/Fede/web/ahorcado%20web/version%202/juego.html?palabra=${encodedWord}`;
                         document.getElementById('link-section').innerHTML = `<p>Enlace generado:</p><a href="${enlace}" target="_blank">${enlace}</a>`;
                     } else {
                         alert('La palabra no existe en el diccionario.');
@@ -63,6 +85,10 @@
             } else {
                 alert('Por favor, ingrese una palabra.');
             }
+        }
+
+        function abrirNuevaVentana() {
+            window.open('nueva_pagina.html', '_blank');
         }
     </script>
 </body>

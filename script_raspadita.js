@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let isDrawing = false;
-    let firstScratch = false; // Bandera para saber si ya se ha raspado
+    let firstScratch = false;
 
     function getMousePos(canvas, evt) {
         const rect = canvas.getBoundingClientRect();
@@ -39,9 +39,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function hideText() {
-        if (!firstScratch) { // Solo ocultamos la primera vez que raspan
+        if (!firstScratch) {
             overlayText.style.display = 'none';
             firstScratch = true;
+        }
+    }
+
+    // Calcular el porcentaje raspado del canvas
+    function checkCompletion() {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let totalPixels = imageData.width * imageData.height;
+        let clearPixels = 0;
+
+        // Contar los píxeles que están completamente despejados
+        for (let i = 0; i < totalPixels * 4; i += 4) {
+            if (imageData.data[i + 3] === 0) { // Comprobar si el píxel es transparente
+                clearPixels++;
+            }
+        }
+
+        let percent = (clearPixels / totalPixels) * 100;
+        if (percent > 90) { // Si más del 90% del área está raspada
+            window.location.href = "ganador_raspadita.html"; // Redirigir a la página del ganador
         }
     }
 
@@ -49,13 +68,15 @@ document.addEventListener("DOMContentLoaded", function() {
         isDrawing = true;
         const pos = getMousePos(canvas, e);
         scratch(pos.x, pos.y);
-        hideText(); // Ocultar el texto cuando se comienza a raspar
+        hideText();
+        checkCompletion(); // Comprobar el porcentaje raspado
     });
 
     canvas.addEventListener('mousemove', function(e) {
         if (isDrawing) {
             const pos = getMousePos(canvas, e);
             scratch(pos.x, pos.y);
+            checkCompletion(); // Comprobar el porcentaje raspado
         }
     });
 
@@ -67,13 +88,15 @@ document.addEventListener("DOMContentLoaded", function() {
         isDrawing = true;
         const pos = getTouchPos(canvas, e);
         scratch(pos.x, pos.y);
-        hideText(); // Ocultar el texto cuando se comienza a raspar
+        hideText();
+        checkCompletion(); // Comprobar el porcentaje raspado
     });
 
     canvas.addEventListener('touchmove', function(e) {
         if (isDrawing) {
             const pos = getTouchPos(canvas, e);
             scratch(pos.x, pos.y);
+            checkCompletion(); // Comprobar el porcentaje raspado
         }
     });
 

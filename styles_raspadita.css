@@ -5,6 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
+    overflow: hidden; /* Evita el desplazamiento en pantallas */
 }
 
 .scratch-container {
@@ -19,4 +20,16 @@ canvas {
     border: 1px solid #ccc;
     background: url('imagen_raspadita.jpg') no-repeat center center;
     background-size: cover;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: white;
+    font-family: Arial, sans-serif;
+    pointer-events: none; /* Evita la interferencia con el raspado */
+    z-index: 1;
 }

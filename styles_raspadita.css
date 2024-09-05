@@ -5,7 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
-    overflow: hidden; /* Evita el desplazamiento en pantallas */
+    overflow: hidden;
 }
 
 .scratch-container {
@@ -30,6 +30,6 @@ canvas {
     font-size: 24px;
     color: white;
     font-family: Arial, sans-serif;
-    z-index: 2; /* Asegura que el texto esté encima del canvas */
-    pointer-events: none; /* Evita interferencia con el raspado */
+    z-index: 2;
+    pointer-events: none; 
 }

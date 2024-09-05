@@ -5,7 +5,8 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
-    background: url('fondo.jpg') no-repeat center center fixed;
+    /* Fondo */
+    /* background: url('fondo.jpg') no-repeat center center fixed; */
     overflow: hidden;
 }
 

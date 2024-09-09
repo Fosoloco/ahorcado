@@ -8,9 +8,22 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.width = container.offsetWidth;
     canvas.height = container.offsetHeight;
 
-    // Rellenar el canvas con un color gris
-    ctx.fillStyle = "#b0b0b0";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Selección aleatoria de imagen entre las 1000 imágenes
+    const randomImageNumber = Math.floor(Math.random() * 1000) + 1; // Selecciona un número aleatorio entre 1 y 1000
+    const randomImagePath = `imagenes_raspadita/imagen_${randomImageNumber}.jpg`; // Ruta de la imagen aleatoria
+
+    // Crear una nueva imagen
+    const image = new Image();
+    image.src = randomImagePath;
+
+    image.onload = function() {
+        // Cuando la imagen esté cargada, dibujarla detrás del canvas
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        // Rellenar el canvas con un color gris que simula la raspadita
+        ctx.fillStyle = "#b0b0b0";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    };
 
     let isDrawing = false;
     let firstScratch = false;

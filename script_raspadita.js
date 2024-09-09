@@ -3,27 +3,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const ctx = canvas.getContext("2d");
     const overlayText = document.querySelector(".overlay-text");
     
-    // Selecciona una imagen aleatoria entre las 1000 cargadas
-    const randomImageNumber = Math.floor(Math.random() * 1000) + 1;
-    const randomImagePath = `imagen_${randomImageNumber}.jpg`;
+    // Ajusta el tamaño del canvas al tamaño de su contenedor
+    const container = document.querySelector(".scratch-container");
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
 
-    // Crear una nueva imagen para cargar la raspadita
-    const image = new Image();
-    image.src = randomImagePath;
-
-    image.onload = function() {
-        // Ajusta el tamaño del canvas al tamaño de su contenedor
-        const container = document.querySelector(".scratch-container");
-        canvas.width = container.offsetWidth;
-        canvas.height = container.offsetHeight;
-
-        // Rellenar el canvas con un color gris
-        ctx.fillStyle = "#b0b0b0";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Dibujar la imagen detrás del canvas cuando esté completamente raspada
-        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    };
+    // Rellenar el canvas con un color gris
+    ctx.fillStyle = "#b0b0b0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let isDrawing = false;
     let firstScratch = false;
@@ -82,14 +69,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const pos = getMousePos(canvas, e);
         scratch(pos.x, pos.y);
         hideText();
-        checkCompletion();
+        checkCompletion(); // Comprobar el porcentaje raspado
     });
 
     canvas.addEventListener('mousemove', function(e) {
         if (isDrawing) {
             const pos = getMousePos(canvas, e);
             scratch(pos.x, pos.y);
-            checkCompletion();
+            checkCompletion(); // Comprobar el porcentaje raspado
         }
     });
 
@@ -102,14 +89,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const pos = getTouchPos(canvas, e);
         scratch(pos.x, pos.y);
         hideText();
-        checkCompletion();
+        checkCompletion(); // Comprobar el porcentaje raspado
     });
 
     canvas.addEventListener('touchmove', function(e) {
         if (isDrawing) {
             const pos = getTouchPos(canvas, e);
             scratch(pos.x, pos.y);
-            checkCompletion();
+            checkCompletion(); // Comprobar el porcentaje raspado
         }
     });
 

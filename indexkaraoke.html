@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karaoke YouTube</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #search-container, #playlist-container {
+            margin: 20px;
+            width: 80%;
+            max-width: 500px;
+        }
+        #search-results, #playlist {
+            list-style-type: none;
+            padding: 0;
+        }
+        .video-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .video-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Karaoke YouTube</h1>
+    <div id="search-container">
+        <input type="text" id="search-query" placeholder="Buscar canciones de karaoke...">
+        <button onclick="searchVideos()">Buscar</button>
+        <ul id="search-results"></ul>
+    </div>
+    <div id="playlist-container">
+        <h2>Mi Lista de Karaoke</h2>
+        <ul id="playlist"></ul>
+    </div>
+
+    <script>
+        const apiKey = 'TU_CLAVE_API_YOUTUBE'; // Reemplaza con tu clave de API de YouTube
+        let playlist = [];
+
+        function searchVideos() {
+            const query = document.getElementById('search-query').value;
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query} karaoke&type=video&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = '';
+                    data.items.forEach(item => {
+                        const videoId = item.id.videoId;
+                        const title = item.snippet.title;
+                        const listItem = document.createElement('li');
+                        listItem.className = 'video-item';
+                        listItem.innerHTML = `
+                            ${title} 
+                            <button onclick="addToPlaylist('${videoId}', '${title}')">Agregar</button>
+                        `;
+                        resultsContainer.appendChild(listItem);
+                    });
+                });
+        }
+
+        function addToPlaylist(videoId, title) {
+            playlist.push({ videoId, title });
+            updatePlaylist();
+        }
+
+        function removeFromPlaylist(index) {
+            playlist.splice(index, 1);
+            updatePlaylist();
+        }
+
+        function updatePlaylist() {
+            const playlistContainer = document.getElementById('playlist');
+            playlistContainer.innerHTML = '';
+            playlist.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'video-item';
+                listItem.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${item.videoId}" target="_blank">${item.title}</a>
+                    <button onclick="removeFromPlaylist(${index})">Eliminar</button>
+                `;
+                playlistContainer.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>

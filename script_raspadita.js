@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         let percent = (clearPixels / totalPixels) * 100;
-        if (percent > 90) { // Si más del 90% del área está raspada
+        if (percent > 95) { // Si más del 95% del área está raspada - originalmente 90
             window.location.href = "ganador_raspadita.html"; // Redirigir a la página del ganador
         }
     }
@@ -114,3 +114,4 @@ document.addEventListener("DOMContentLoaded", function() {
         isDrawing = false;
     });
 });
+
